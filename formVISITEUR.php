@@ -28,7 +28,7 @@ include "parametres.php";
 </div>
 <div name="droite" style="float:left;width:80%;">
 	<div name="bas" style="margin : 10 2 2 2;clear:left;background-color:77AADD;color:white;height:88%;">
-	<form name="formVISITEUR" method="post" action="recupVISITEUR.php">
+	<form name="formVISITEUR" method="post" action="">
 		<h1> Visiteurs </h1>
 		<?
 		// récupération des département
@@ -48,7 +48,9 @@ include "parametres.php";
 		}
 		?>
 		</select>
-		
+		<input type="submit" name="Selectionner" value="Selectionner"/>
+		</form>
+		<form action="" method="POST">
 		<select name="lstVisiteur" class="zone"><option value=""></option></select>
 		<label class="titre">NOM :</label><input type="text" size="25" name="VIS_NOM" class="zone" />
 		<label class="titre">PRENOM :</label><input type="text" size="50" name="Vis_PRENOM" class="zone" />
