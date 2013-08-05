@@ -1,5 +1,6 @@
 <?
-$hote="172.16.51.15";
+//$hote="172.16.51.15";
+$hote="127.0.0.1";//Penser à virer cette ligne lorsque le taff sera fait
 $user="technicien";
 $mdp="ini01";
 $base="db_gestionCR";
