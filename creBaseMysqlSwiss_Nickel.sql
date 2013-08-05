@@ -10,7 +10,7 @@
 
  create database if not exists db_gestionCR;
 
--- grant all privileges on *.* to technicien@localhost identified by 'ini01';
+ grant all privileges on db_gestionCR.* to technicien@localhost identified by 'ini01';
 
  use db_gestionCR;
 
