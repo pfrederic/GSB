@@ -2,6 +2,7 @@
 	//Attente : Gérer les cabinets, en affectant des praticiens à des cabinets, et en sachant si lors de la visite si c'était un remplaçant
 	//Connexion à la base
 	$host="172.16.51.14";
+	$host="127.0.0.1";
 	$user="technicien";
 	$mdp="ini01";
 	$db="db_gestionCR";
