@@ -46,36 +46,6 @@ ALTER TABLE RAPPORT_VISITE ADD COLUMN RAP_DUREESAISIE integer;
 -- Attente : Noter la présence de la concurrence lors d'une visite
 ALTER TABLE RAPPORT_VISITE ADD COLUMN RAP_CONCURRENCE varchar(25);
 
--- Attente : Savoir si lors d'une visite, si c'était un remplaçant (gestion de cabinet)
-/*DROP TABLE if exists CABINET;
-CREATE TABLE CABINET
- (
- CAB_CODE integer primary key,
- CAB_ADRESSE varchar(30),
- CAB_CP varchar(5),
- CAB_VILLE varchar(30)
- )engine="innodb";
-
-DROP TABLE if exists AFFECTATION;
-CREATE TABLE AFFECTATION
- (
- PRA_CODE integer,
- CAB_CODE integer,
- PRIMARY KEY(PRA_CODE,CAB_CODE),
- foreign key(PRA_CODE) references PRATICIEN(PRA_CODE),
- foreign key(CAB_CODE) references CABINET(CAB_CODE)
- )engine="innodb";
-
-ALTER TABLE PRATICIEN
-DROP COLUMN PRA_ADRESSE;
-
-ALTER TABLE PRATICIEN
-DROP COLUMN PRA_CP;
-
-ALTER TABLE PRATICIEN
-DROP COLUMN PRA_VILLE;
-
-*/
 -- Attente : Le visiteur évalue le praticien sur les connaissances des produits
 -- Attente : 2 produits max présenté par visite
 
@@ -95,18 +65,28 @@ CREATE TABLE PRESENTE
 
 -- Attente : Gérer les responsables, dans une nouvelle table
 DROP TABLE if exists RESPONSABLE;
-CREATE TABLE REPONSABLE
+CREATE TABLE RESPONSABLE
  (
- RES_CODE integer,
- VIS_MATRICULE integer,
+ RES_CODE varchar(20),
+ VIS_MATRICULE varchar(20),
  PRIMARY KEY(RES_CODE,VIS_MATRICULE)
  )engine="innodb";
+
+ALTER TABLE RESPONSABLE
+ADD FOREIGN KEY (VIS_MATRICULE) REFERENCES VISITEUR(VIS_MATRICULE);
+
+INSERT INTO RESPONSABLE VALUES('r01','a17');
 
 -- Attente : Gérer les délégués, dans une nouvelle table
 DROP TABLE if exists DELEGUE;
 CREATE TABLE DELEGUE
  (
- DEL_CODE integer,
- VIS_MATRICULE integer,
+ DEL_CODE varchar(20),
+ VIS_MATRICULE varchar(20),
  PRIMARY KEY(DEL_CODE,VIS_MATRICULE)
  )engine="innodb";
+
+ALTER TABLE DELEGUE
+ADD FOREIGN KEY (VIS_MATRICULE) REFERENCES VISITEUR(VIS_MATRICULE);
+
+INSERT INTO DELEGUE VALUES('d01','e22');
