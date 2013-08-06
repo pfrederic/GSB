@@ -1,5 +1,5 @@
 <?
-include "parametres.php";
+include("scripts/parametres.php");
 ?>
 <html>
 <head>

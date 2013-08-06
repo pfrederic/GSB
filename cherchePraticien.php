@@ -1,11 +1,11 @@
 <?php 
-	include ("parametres.php") 
+	include ("scripts/parametres.php");
 	//on interroge la base
-	$req="select * from PRATICIEN  where pra_num='".$_POST["pratNum"]."'";
+	$req="select * from PRATICIEN  where PRA_CODE='".$_POST["pratNum"]."';";
 	$curseur=mysql_query($req); 
 	$res=mysql_fetch_array($curseur);
-	$reqType="select typ_libelle from type_praticien where typ_code='".$res["TYP_CODE"]."'";
-	$resType=mysql_fetch_array($reqType));
+	$reqType="select TYP_LIBELLE from TYPE_PRATICIEN where TYP_CODE='".$res["TYP_CODE"]."'";
+	$resType=mysql_fetch_array($reqType);
 	//s'il reste un enregistrement non lu
 	if ($res != "") {
 		//on positionne les champs avec les valeurs de la table
