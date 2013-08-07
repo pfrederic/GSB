@@ -1,5 +1,5 @@
 <?php
-include "fonction.php";
+include ("scripts/fonction.php");
 
 if(isset($_POST['btActionFormAuthentification']))
 {

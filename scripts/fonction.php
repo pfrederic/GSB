@@ -18,12 +18,24 @@ function authentification($idUser, $mdpUser)
 
 	if($mdpUser==$maLigne["VIS_MDP"])
 	{//début if
-		header('location:index.html');	
+		$_SESSION['login']=$idUser;
+		header('location:index.php');	
 	}//fin if
 	else
 	{
 		echo("Problème de connexion");
 	}
+}
+
+/** 
+ * Vérifie si un visiteur s'est connecté sur le site.                     
+ *
+ * Retourne true si un visiteur s'est identifié sur le site, false sinon. 
+ * @return boolean échec ou succès
+ */
+function estVisiteurConnecte() {
+    // actuellement il n'y a que les visiteurs qui se connectent
+    return isset($_SESSION["login"]);
 }
 
 ?>

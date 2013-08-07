@@ -1,38 +1,34 @@
-<?session_start();
-include "parametres.php";
+<?
+include("./scripts/parametres.php");
+include("./scripts/fonction.php");
+
+// page inaccessible si visiteur non connecté
+if ( ! estVisiteurConnecte() ) 
+{
+	header("Location:login.php");  
+}
+
 if(!isset($_SESSION['numMed']))
 {
-$_SESSION['numMed']=0;
+	$_SESSION['numMed']=0;
 }
+include("./scripts/entete.html");
 ?>
-<html>
-<head>
-	<title>formulaire MEDICAMENT</title>
-	<style type="text/css">
-		<!-- body {background-color: white; color:5599EE; } 
-			label.titre { width : 180 ;  clear:left; float:left; } 
-			.zone { width : 30car ; float : left; color:7091BB } -->
-	</style>
-</head>
-<body>
-<div name="haut" style="margin: 2 2 2 2 ;height:6%;"><h1><img src="logo.jpg" width="100" height="60"/>Gestion des visites</h1></div>
-<div name="gauche" style="float:left;width:18%; background-color:white; height:100%;">
-	<h2>Outils</h2>
-	<ul><li>Comptes-Rendus</li>
-		<ul>
+<div id="menuGauche">
+<h2>Gestion des visites</h2>
+<h3>Outils</h3>
+	<ul id="menuListTitle">Comptes-Rendus</ul>
+		<ul id="menuList">
 			<li><a href="formRAPPORT_VISITE.php" >Nouveaux</a></li>
 			<li>Consulter</li>
 		</ul>
-		<li>Consulter</li>
-		<ul><li><a href="formMEDICAMENT.php" >Medicaments</a></li>
+		<ul id="menuListTitle">Consulter</ul>
+		<ul id="menuList"><li><a href="formMEDICAMENT.php" >Medicaments</a></li>
 			<li><a href="formPRATICIEN.php" >Praticiens</a></li>
 			<li><a href="formVISITEUR.php" >Autres visiteurs</a></li>
 		</ul>
-	</ul>
 </div>
-<div name="droite" style="float:left;width:80%;">
-        <div name="bas" style="margin : 10 2 2 2;clear:left;background-color:77AADD;color:white;height:88%;">
-
+<div id="contenu">
 <?
 $requete="select count(*) as nbMedic from MEDICAMENT";
 $result=mysql_query($requete);
@@ -68,19 +64,32 @@ $prixEchantillon=$ligne['MED_PRIXECHANTILLON'];
 ?>
 	<form name="formMEDICAMENT" method="post" action="">
 		<h1> Pharmacopee </h1>
-		<label class="titre">DEPOT LEGAL :</label><input type="text" size="10" name="MED_DEPOTLEGAL" class="zone" value="<?=$depotLegal?>" />
-		<label class="titre">NOM COMMERCIAL :</label><input type="text" size="25" name="MED_NOMCOMMERCIAL" class="zone" value="<?=$nomCommercial?>"/>
-		<label class="titre">FAMILLE :</label><input type="text" size="3" name="FAM_CODE" class="zone" value="<?=$famille?>"/>
-		<label class="titre">COMPOSITION :</label><textarea rows="5" cols="50" name="MED_COMPOSITION" class="zone" ><?=$composition?></textarea>
-		<label class="titre">EFFETS :</label><textarea rows="5" cols="50" name="MED_EFFETS" class="zone" ><?=$effets?></textarea>
-		<label class="titre">CONTRE INDIC. :</label><textarea rows="5" cols="50" name="MED_CONTREINDIC" class="zone" ><?=$contrIndic?></textarea>
-		<label class="titre">PRIX ECHANTILLON :</label><input type="text" size="7" name="MED_PRIXECHANTILLON" class="zone" value="<?=$prixEchantillon?>"/> 
-		<label class="titre">&nbsp;</label><input class="zone" type="submit" name="precedent" value="<"></input><input class="zone" type="submit" value=">" name="suivant"></input>
+		<table>
+		<tr>
+		<th>DEPOT LEGAL :</th><td><input type="text" size="10" name="MED_DEPOTLEGAL" class="zone" value="<?=$depotLegal?>" /></td>
+		</tr>
+		<tr>
+		<th>NOM COMMERCIAL :</th><td><input type="text" size="25" name="MED_NOMCOMMERCIAL" class="zone" value="<?=$nomCommercial?>"/></td>
+		</tr>
+		<tr>
+		<th>FAMILLE :</th><td><input type="text" size="3" name="FAM_CODE" class="zone" value="<?=$famille?>"/></td>
+		</tr>
+		<tr>
+		<th>COMPOSITION :</th><td><textarea rows="5" cols="50" name="MED_COMPOSITION" class="zone" ><?=$composition?></textarea></td>
+		</tr>
+		<tr>
+		<th>EFFETS :</th><td><textarea rows="5" cols="50" name="MED_EFFETS" class="zone" ><?=$effets?></textarea></td>
+		</tr>
+		<tr>
+		<th>CONTRE INDIC. :</th><td><textarea rows="5" cols="50" name="MED_CONTREINDIC" class="zone" ><?=$contrIndic?></textarea></td>
+		</tr>
+		<tr>
+		<th>PRIX ECHANTILLON :</th><td><input type="text" size="7" name="MED_PRIXECHANTILLON" class="zone" value="<?=$prixEchantillon?>"/></td>
+		</tr>
+		</table>
+		<input class="zone" type="submit" name="precedent" value="<"></input><input class="zone" type="submit" value=">" name="suivant"></input>
 	</form>
-	</div>
 </div>
 <?
-
+include("./scripts/pied.html");
 ?>
-</body>
-</html>
