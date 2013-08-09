@@ -1,3 +1,13 @@
+<?
+include("./scripts/parametres.php");
+include("./scripts/fonction.php");
+
+// page inaccessible si visiteur non connecté
+if ( ! estVisiteurConnecte() ) 
+{
+	header("Location:login.php");  
+}
+?>
 <html><head>
 	<title>formulaire RAPPORT_VISITE</title>
 	<style type="text/css">

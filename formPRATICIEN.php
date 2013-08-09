@@ -1,16 +1,15 @@
 <?
-include("scripts/parametres.php");
-?>
-<html>
-<head>
-	<title>formulaire PRATICIEN</title>
-	<LINK REL=StyleSheet HREF="site.css" TYPE="text/css"/>
-	<style type="text/css">
-		<!-- body {background-color: white; color:5599EE; } 
-			label.titre { width : 180 ;  clear:left; float:left; } 
-			.zone { width : 300 ; float : left; color:white } -->
-	</style>
-	<?/*
+include("./scripts/parametres.php");
+include("./scripts/fonction.php");
+
+// page inaccessible si visiteur non connecté
+if ( ! estVisiteurConnecte() ) 
+{
+	header("Location:login.php");  
+}
+
+include("./scripts/entete.html");
+/*
 	<script language = "javascript">
 		function chercher($pNumero) {  
 			var xhr_object = null; 	    
@@ -36,30 +35,14 @@ include("scripts/parametres.php");
 		   
 	   }
 	</script>
-*/?>
-</head>
-<body>	
-<div name="haut" style="margin: 2 2 2 2 ;height:6%;"><h1><img src="logo.jpg" width="100" height="60"/>Gestion des visites</h1></div>
-<div name="gauche" style="float:left;width:18%; background-color:white; height:100%;">
-	<h2>Outils</h2>
-	<ul><li>Comptes-Rendus</li>
-		<ul>
-			<li><a href="formRAPPORT_VISITE.php" >Nouveaux</a></li>
-			<li>Consulter</li>
-		</ul>
-		<li>Consulter</li>
-		<ul><li><a href="formMEDICAMENT.php" >Medicaments</a></li>
-			<li><a href="formPRATICIEN.php" >Praticiens</a></li>
-			<li><a href="formVISITEUR.php" >Autres visiteurs</a></li>
-		</ul>
-	</ul>
-</div>
-<div name="droite" style="float:left;width:80%;">
-	<div name="bas" style="margin : 10 2 2 2;clear:left;background-color:77AADD;color:white;height:88%;">
+*/
+include("./scripts/menuGauche.html");
+?>
+<div id="contenu">
 		<h1> Praticiens </h1>
 		<form name="formListeRecherche"	method="POST" action="" >
 		<?
-			$req="select PRA_NOM from PRATICIEN order by PRA_NOM";
+			$req="select PRA_CODE, PRA_NOM from PRATICIEN order by PRA_NOM;";
 			$resultat=mysql_query($req);
 		?>
 			<select name="lstPrat" class="titre">
@@ -67,9 +50,9 @@ include("scripts/parametres.php");
 		<?
 			while($ligne=mysql_fetch_array($resultat))
 			{
-				$nomPrat=$ligne['PRA_NOM'];
+				$codePrat=$ligne['PRA_CODE'];
 		?>
-				<option value="<?=$nomPrat?>"><?=$nomPrat?></option>
+				<option value="<?=$codePrat?>"><?=$ligne['PRA_NOM'];?></option>
 		<?
 			}
 		?>
@@ -79,30 +62,31 @@ include("scripts/parametres.php");
 <?
 if(isset($_POST['Rechercher']))
 {
-        $nomPrat=$_POST['lstPrat'];
-        $req="select * from PRATICIEN where PRA_NOM='$nomPrat'";
+        $codePrat=$_POST['lstPrat'];
+        $req="select PRA_NOM, PRA_PRENOM, PRA_COEFNOTORIETE, CAB_ADRESSE, CAB_CP, CAB_VILLE from PRATICIEN natural join AFFECTATION natural join CABINET where PRA_CODE='".$codePrat."';";
+        $result=mysql_query($req);
+	$maLigne=mysql_fetch_array($result);
+	?>
+	<p><h4>Nom : </h4><?=$maLigne['PRA_NOM'];?><h4>Prenom : </h4><?=$maLigne['PRA_PRENOM'];?></p>
+	<?
         $result=mysql_query($req);
         while($ligne=mysql_fetch_array($result))
         {
-                $prenom=$ligne['PRA_PRENOM'];
-                $adresse=$ligne['PRA_ADRESSE'];
-                $cp=$ligne['PRA_CP'];
-                $ville=$ligne['PRA_VILLE'];
+                $adresse=$ligne['CAB_ADRESSE'];
+                $cp=$ligne['CAB_CP'];
+                $ville=$ligne['CAB_VILLE'];
                 $coeffNotoriete=$ligne['PRA_COEFNOTORIETE'];
 
         ?>
+
         <table>
         <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
                 <th>Adresse</th>
                 <th>Code Postal</th>
                 <th>Ville</th>
                 <th>Coefficient</th>
         </tr>
         <tr>
-                <td><?=$nomPrat?></td>
-                <td><?=$prenom?></td>
                 <td><?=$adresse?></td>
                 <td><?=$cp?></td>
 		<td><?=$ville?></td>
@@ -115,7 +99,7 @@ if(isset($_POST['Rechercher']))
 }
 
 ?>
-	</div>
 </div>
-</body>
-</html>
+<?
+include("./scripts/pied.html");
+?>

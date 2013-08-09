@@ -38,4 +38,16 @@ function estVisiteurConnecte() {
     return isset($_SESSION["login"]);
 }
 
+/**
+ * Déconnecte le visiteur, quand celui-ci le souhaite
+ * 
+ * @void
+*/
+function deconnexion()
+{
+	session_destroy();
+
+	header('Location:login.php');
+}
+
 ?>

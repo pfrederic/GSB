@@ -1,39 +1,24 @@
 <?
-include "parametres.php";
+include("./scripts/parametres.php");
+include("./scripts/fonction.php");
+
+// page inaccessible si visiteur non connecté
+if ( ! estVisiteurConnecte() ) 
+{
+	header("Location:login.php");  
+}
+
+include("./scripts/entete.html");
+include("./scripts/menuGauche.html");
 ?>
-<html>
-<head>
-	<title>formulaire VISITEUR</title>
-	<style type="text/css">
-		<!-- body {background-color: white; color:5599EE; } 
-			.titre { width : 180 ;  clear:left; float:left; } 
-			.zone { width : 30car ; float : left; color:7091BB } -->
-	</style>
-</head>
-<body>
-<div name="haut" style="margin: 2 2 2 2 ;height:6%;"><h1><img src="logo.jpg" width="100" height="60"/>Gestion des visites</h1></div>
-<div name="gauche" style="float:left;width:18%; background-color:white; height:100%;">
-	<h2>Outils</h2>
-	<ul><li>Comptes-Rendus</li>
-		<ul>
-			<li><a href="formRAPPORT_VISITE.php" >Nouveaux</a></li>
-			<li>Consulter</li>
-		</ul>
-		<li>Consulter</li>
-		<ul><li><a href="formMEDICAMENT.php" >Medicaments</a></li>
-			<li><a href="formPRATICIEN.php" >Praticiens</a></li>
-			<li><a href="formVISITEUR.php" >Autres visiteurs</a></li>
-		</ul>
-	</ul>
-</div>
-<div name="droite" style="float:left;width:80%;">
-	<div name="bas" style="margin : 10 2 2 2;clear:left;background-color:77AADD;color:white;height:88%;">
+<div id="contenu">
 	<form name="formVISITEUR" method="post" action="">
 		<h1> Visiteurs </h1>
 		<?
 		// récupération des département
 		// il faut faire la table DEPARTEMENT
 		$req="Select DEP_CODE,DEP_NOM from VISITEUR natural join DEPARTEMENT order by DEP_NOM";
+		echo $req;
 		$resultat=mysql_query($req);
 		?>
 		<select name="lstDept" class="titre">
@@ -61,6 +46,6 @@ include "parametres.php";
 		<label class="titre">&nbsp;</label><input class="zone"type="button" value="<"></input><input class="zone"type="button" value=">"></input>
 	</form>
 	</div>
-</div>
-</body>
-</html>
+<?
+include("./scripts/pied.html");
+?>

@@ -13,21 +13,8 @@ if(!isset($_SESSION['numMed']))
 	$_SESSION['numMed']=0;
 }
 include("./scripts/entete.html");
+include("./scripts/menuGauche.html");
 ?>
-<div id="menuGauche">
-<h2>Gestion des visites</h2>
-<h3>Outils</h3>
-	<ul id="menuListTitle">Comptes-Rendus</ul>
-		<ul id="menuList">
-			<li><a href="formRAPPORT_VISITE.php" >Nouveaux</a></li>
-			<li>Consulter</li>
-		</ul>
-		<ul id="menuListTitle">Consulter</ul>
-		<ul id="menuList"><li><a href="formMEDICAMENT.php" >Medicaments</a></li>
-			<li><a href="formPRATICIEN.php" >Praticiens</a></li>
-			<li><a href="formVISITEUR.php" >Autres visiteurs</a></li>
-		</ul>
-</div>
 <div id="contenu">
 <?
 $requete="select count(*) as nbMedic from MEDICAMENT";
