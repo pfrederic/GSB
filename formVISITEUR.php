@@ -97,7 +97,7 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 				<p>
 				SECTEUR :<input type="text" size="1" name="SEC_CODE" class="zone" value="<?=$maLigne['VIS_SECTEUR']?>"/>
 				</p>
-				<input class="zone"type="button" value="<"></input><input class="zone"type="button" value=">"></input>
+				<input class="zone" type="button" value="<"></input><input class="zone" type="button" value=">"></input>
 			</form>
 		<?
 		}//fin if

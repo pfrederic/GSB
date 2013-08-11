@@ -41,21 +41,10 @@ include("./scripts/menuGauche.html");
 <div id="contenu">
 		<h1> Praticiens </h1>
 		<form name="formListeRecherche"	method="POST" action="" >
-		<?
-			$req="select PRA_CODE, PRA_NOM from PRATICIEN order by PRA_NOM;";
-			$resultat=mysql_query($req);
-		?>
 			<select name="lstPrat" class="titre">
-				<option>Choisissez un praticien</option>
-		<?
-			while($ligne=mysql_fetch_array($resultat))
-			{
-				$codePrat=$ligne['PRA_CODE'];
-		?>
-				<option value="<?=$codePrat?>"><?=$ligne['PRA_NOM'];?></option>
-		<?
-			}
-		?>
+			<?
+			optionListDerPraticien();
+			?>
 			</select>
 		<input type="submit" name="Rechercher" value="Rechercher"/>	
 		</form>	
