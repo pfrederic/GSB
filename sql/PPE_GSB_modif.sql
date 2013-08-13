@@ -7,15 +7,17 @@
 DROP TABLE if exists MOTIF_VISITE;
 CREATE TABLE MOTIF_VISITE
  (
- MOT_CODE	integer primary key,
+ MOT_CODE	varchar(3) primary key,
  MOT_LIB	varchar(30)
  )engine="innodb";
+
+INSERT INTO MOTIF_VISITE VALUES('PRD','Périodicité'),('ACT','Actualisation'),('REL','Relance'),('SOL','Sollicitation praticien'),('AUT','Autre');
 
 ALTER TABLE RAPPORT_VISITE
 DROP COLUMN RAP_MOTIF;
 
 ALTER TABLE RAPPORT_VISITE
-ADD COLUMN MOT_CODE integer;
+ADD COLUMN MOT_CODE varchar(3);
 
 ALTER TABLE RAPPORT_VISITE
 ADD foreign key (MOT_CODE) references MOTIF_VISITE(MOT_CODE);
@@ -52,14 +54,13 @@ ALTER TABLE RAPPORT_VISITE ADD COLUMN RAP_CONCURRENCE varchar(25);
 DROP TABLE if exists PRESENTE;
 CREATE TABLE PRESENTE
  (
- PRE_CODE integer,
  MED_DEPOTLEGAL varchar(20),
  RAP_CODE integer,
  PRE_CONNAISSANCE integer,
- PRIMARY KEY(PRE_CODE,MED_DEPOTLEGAL),
+ PRIMARY KEY(MED_DEPOTLEGAL,RAP_CODE),
  foreign key(MED_DEPOTLEGAL) references MEDICAMENT(MED_DEPOTLEGAL),
  foreign key(RAP_CODE) references RAPPORT_VISITE(RAP_CODE)
- )engine="innodb"; -- JE ME SUIS ARRETE ICI LAST TIME
+ )engine="innodb";
  
 -- Attente : Coeff de prescription d'un praticien (vérifier si pas déjà gérer dans la base de données)
 

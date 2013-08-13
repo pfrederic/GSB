@@ -83,14 +83,53 @@ function optionListDerMedicament()
 	$req="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL from MEDICAMENT;";
 	$resultat=mysql_query($req);
 	?>
-	<option>Choisissez un médicament</option>
+	<option value="0">Choisissez un médicament</option>
 	<?
 	while($ligne=mysql_fetch_array($resultat))
-	{
+	{//début while
 		$codeMedoc=$ligne['MED_DEPOTLEGAL'];
 		?>
-		<option value="<?=$codeMedoc?>"><?=$ligne['MED_NOMCOMMERCIAL'];?></option>
+		<option value="<?=$codeMedoc?>"><?echo $ligne['MED_NOMCOMMERCIAL'];?></option>
 		<?
-	}
+	}//fin while
+}
+
+/** 
+ * Fonction qui génére les options d'une liste déroulante
+ * qui contient des valeurs numérique allant de 0 à 20.
+ * Ces options serviront notament pour noter le praticien sur 
+ * la connaissance du produit en autre.
+ * 
+ * return @void
+*/
+function optionDerNumerique()
+{
+	for($i=0;$i<21;$i++)
+	{//début for
+		?>
+		<option value="<?=$i?>" ><?echo $i;?></option>
+		<?
+	}//fin for
+}
+
+/**
+ * Transforme une date au format français jj/mm/aaaa vers le format anglais aaaa-mm-jj
+ * @param $date au format  jj/mm/aaaa
+ * @return string la date au format anglais aaaa-mm-jj
+*/
+function convertirDateFrancaisVersAnglais($date){
+	@list($jour,$mois,$annee) = explode('/',$date);
+	return date("Y-m-d", mktime(0, 0, 0, $mois, $jour, $annee));
+}
+
+/**
+ * Transforme une date au format format anglais aaaa-mm-jj vers le format 
+ * français jj/mm/aaaa 
+ * @param $date au format  aaaa-mm-jj
+ * @return string la date au format format français jj/mm/aaaa
+*/
+function convertirDateAnglaisVersFrancais($date){
+    @list($annee,$mois,$jour) = explode('-',$date);
+	return date("d/m/Y", mktime(0, 0, 0, $mois, $jour, $annee));
 }
 ?>
