@@ -20,7 +20,13 @@ if(isset($_POST['btActionFormRapportVisite']))
 	$dateDuJour=date("Y-m-d");
 	$presenceConcurrence=$_POST['lstConcurrence'];
 
+	if(isset($_POST['checkBoxRemplacant']))
+	{//début if
+		$bilanDuRapport.=" Visite réalisé auprès d\'un remplacant (praticien absent)";
+	}//fin if
+
 	$req="insert into RAPPORT_VISITE(VIS_MATRICULE, RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, MOT_CODE, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE) values('".$matriculeVisiteur."',".$codeRapport.",".$codePraticien.",'".$dateDeVisite."','".$bilanDuRapport."','".$motifDeVisite."',".$coefficiantDeConfiance.",'".$dateDuJour."','".$presenceConcurrence."');";
+	echo $req;
 	mysql_query($req);
 	
 
@@ -112,7 +118,7 @@ include("./scripts/menuGauche.html");
 			</p>
 			<p>
 			COEFFICIENT :<select name="lstCoeff"><?optionDerNumerique();?></select>
-			REMPLACANT :<input type="checkbox" class="zone" onClick="selectionne(true,this.checked,'PRA_REMPLACANT');"/>
+			REMPLACANT :<input type="checkbox" class="zone" name="checkBoxRemplacant" onClick="selectionne(true,this.checked,'PRA_REMPLACANT');"/>
 			PRESENCE CONCURRENCE :<select name="lstConcurrence"><option value="Rien">Rien</option>
 									    <option value="Affiche">Affiche</option>
 									    <option value="Prospectus">Prospectus</option>

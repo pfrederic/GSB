@@ -249,7 +249,8 @@ taille de caractères légèrement supérieure à la normale */
 
 #contenu td {
    border :1px solid #777777;
-   align:center;
+   text-align:center;
+   width:25em;
 }
 
 #contenu h3 {
