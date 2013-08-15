@@ -132,4 +132,21 @@ function convertirDateAnglaisVersFrancais($date){
     @list($annee,$mois,$jour) = explode('-',$date);
 	return date("d/m/Y", mktime(0, 0, 0, $mois, $jour, $annee));
 }
+
+/**
+ * Echappe les caractères spéciaux d'une chaîne.
+ * Envoie la chaîne $str échappée, càd avec les caractères considérés spéciaux
+ * par MySql (tq la quote simple) précédés d'un \, ce qui annule leur effet spécial
+ * @param string $str chaîne à échapper
+ * @return string chaîne échappée 
+ */    
+function filtrerChainePourBD($str) {
+    if ( ! get_magic_quotes_gpc() ) { 
+        // si la directive de configuration magic_quotes_gpc est activée dans php.ini,
+        // toute chaîne reçue par get, post ou cookie est déjà échappée 
+        // par conséquent, il ne faut pas échapper la chaîne une seconde fois                              
+        $str = mysql_real_escape_string($str);
+    }
+    return $str;
+}
 ?>

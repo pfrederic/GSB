@@ -20,9 +20,9 @@ include("./scripts/menuGauche.html");
 		{//début while
 			?>
 			<option value="<?=$ligne['RAP_CODE']?>" <?
-			if($ligne['RAP_CODE']==$_POST['lstRapport'])
+			if($_POST['lstRapport']==$ligne['RAP_CODE'])
 			{//début if
-				echo "checked";
+				echo "selected";
 			}//fin if
 			?>
 			>
@@ -39,6 +39,9 @@ include("./scripts/menuGauche.html");
 	<?
 	if(isset($_POST['btActionFormChoixRapport']))
 	{//début if
+		?>
+		<h2>Synthèse de la visite</h2>
+		<?
 		$req="select RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE, MOT_LIB from RAPPORT_VISITE natural join MOTIF_VISITE where RAP_CODE='".$_POST['lstRapport']."';";
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
@@ -77,7 +80,77 @@ include("./scripts/menuGauche.html");
 		    <td><?echo $ligne['MOT_LIB'];?></td>
 		  </tr>
 		</table>
+		<p></p>
+		<h2>Médicament présenté</h2>
 		<?
+		$req="select MED_NOMCOMMERCIAL, PRE_CONNAISSANCE from MEDICAMENT natural join PRESENTE where RAP_CODE=".$_POST['lstRapport'].";";
+		$resultat=mysql_query($req);
+		$ligne=mysql_fetch_array($resultat);
+		if(empty($ligne))
+		{//début if
+			echo ("<div class=\"erreur\" >Aucun médicament présenté</div>");
+		}//fin if
+		else
+		{//début else
+			?>
+			<table>
+				<thead>
+					<th>NOM DU MEDICAMENT</th>
+					<th>NOTE DE CONNAISSANCE</th>
+				</thead>
+				<tbody>
+			<?
+			$resultat=mysql_query($req);
+			while($ligne=mysql_fetch_array($resultat))
+			{//début while
+				?>
+				<tr>
+			  	  <td><?echo $ligne['MED_NOMCOMMERCIAL'];?></td>
+			  	  <td><?echo $ligne['PRE_CONNAISSANCE'];?></td>
+				</tr>
+				<?
+			}//fin while
+			?>
+				</tbody>
+			<table>
+			<?
+		}//fin else
+		?>
+		<p></p>
+		<h2>Echantillon offert</h2>
+		<?
+		$req="select MED_NOMCOMMERCIAL, OFF_QTE from MEDICAMENT natural join OFFRIR where RAP_CODE=".$_POST['lstRapport'].";";
+		$resultat=mysql_query($req);
+		$ligne=mysql_fetch_array($resultat);
+		if(empty($ligne))
+		{//début if
+			echo "<div class=\"erreur\">Aucun échantillon distribué</div>";
+		}//fin if
+		else
+		{//début else
+		$resultat=mysql_query($req);
+		?>
+		<table>
+			<thead>
+				<th>NOM DE L'ECHANTILLON</th>
+				<th>QUANTITE OFFERTE</th>
+			</thead>
+			<tbody>
+		<?
+		while($ligne=mysql_fetch_array($resultat))
+		{//début while
+			?>
+			<tr>
+			  <td><?echo $ligne['MED_NOMCOMMERCIAL'];?></td>
+			  <td><?echo $ligne['OFF_QTE'];?></td>
+			</tr>
+			<?	
+		}//fin while
+		?>
+			</tbody>
+		</table>
+		<?
+		}//fin else
 	}//fin if
 	?>
 </div>

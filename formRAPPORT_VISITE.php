@@ -22,15 +22,14 @@ if(isset($_POST['btActionFormRapportVisite']))
 
 	if(isset($_POST['checkBoxRemplacant']))
 	{//début if
-		$bilanDuRapport.=" Visite réalisé auprès d\'un remplacant (praticien absent)";
+		$bilanDuRapport.=" Visite réalisé auprès d'un remplacant (praticien absent)";
 	}//fin if
 
+	$bilanDuRapport=filtrerChainePourBD($bilanDuRapport);
+
 	$req="insert into RAPPORT_VISITE(VIS_MATRICULE, RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, MOT_CODE, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE) values('".$matriculeVisiteur."',".$codeRapport.",".$codePraticien.",'".$dateDeVisite."','".$bilanDuRapport."','".$motifDeVisite."',".$coefficiantDeConfiance.",'".$dateDuJour."','".$presenceConcurrence."');";
-	echo $req;
 	mysql_query($req);
 	
-
-
 	for($i=1;$i<3;$i++)
 	{//début for
 		$produitPresente=$_POST['lstProd'.$i];

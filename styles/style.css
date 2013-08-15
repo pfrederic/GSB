@@ -245,6 +245,7 @@ taille de caractères légèrement supérieure à la normale */
    font-weight:bold;
    border-bottom:0.1em solid #777777;
    font-size:1.1em;
+   text-align:center;
 } 
 
 #contenu td {
