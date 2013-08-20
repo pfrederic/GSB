@@ -36,7 +36,7 @@ include("./scripts/entete.html");
 	   }
 	</script>
 */
-include("./scripts/menuGauche.html");
+include("./scripts/menuGauche.php");
 ?>
 <div id="contenu">
 		<h1> Praticiens </h1>

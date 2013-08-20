@@ -13,7 +13,7 @@ if(!isset($_SESSION['numMed']))
 	$_SESSION['numMed']=0;
 }
 include("./scripts/entete.html");
-include("./scripts/menuGauche.html");
+include("./scripts/menuGauche.php");
 ?>
 <div id="contenu">
 <?

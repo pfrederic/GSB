@@ -2,10 +2,10 @@
 include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 
-// page inaccessible si visiteur non connecté
-if ( ! estVisiteurConnecte() ) 
+// page inaccessible si visiteur non connecté ou différent d'un visiteur ou d'un délégué
+if ( ! estVisiteurConnecte() || $_SESSION['hierarchie']!=0 || $_SESSION['hierarchie']!=1) 
 {
-	header("Location:login.php");  
+	header("Location:index.php");  
 }
 
 if(isset($_POST['btActionFormRapportVisite']))
@@ -63,7 +63,7 @@ if(isset($_POST['btActionFormRapportVisite']))
 }//fin if
 
 include("./scripts/entete.html");
-include("./scripts/menuGauche.html");
+include("./scripts/menuGauche.php");
 ?>
 	<script language="javascript">
 		function selectionne(pValeur, pSelection,  pObjet) {

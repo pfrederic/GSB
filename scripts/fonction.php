@@ -2,14 +2,42 @@
 session_start();
 include "parametres.php";
 
+/**
+ * Fonction permet de connaitre le statut hiérarchie de la personne connecté
+ * La fonction va stocker dans une variable session, le niveau hiérarchique de la personne connecté
+ * et va permettre de restreindre l'accés à certaines pages et de modifier le menu en fonction.
+ * Cette fonction va également permettre de stocker dans une autre variabe session, la région dans laquelle
+ * travail la personne connecté. Cela est nécessaire pour restreindre l'accés à certains données.
+ * Notament pour qu'un délégué ne puisse avoir accés qu'au données de sa région
+ * @param string $idUser id de l'utilisateur connecté
+*/
+function connaitreNiveauHierarchiqueEtRegion($idUser) {
+	$req="select TRA_ROLE, REG_CODE from TRAVAILLER where VIS_MATRICULE='".$idUser."';";
+	$resultat=mysql_query($req);
+	$ligne=mysql_fetch_array($resultat);
+	if($ligne['TRA_ROLE']=="Responsable")
+	{//début if
+		$_SESSION['hierarchie']=2;
+	}//fin if
+	elseif($ligne['TRA_ROLE']=="Délégué")
+	{//début if
+		$_SESSION['hierarchie']=1;
+	}//fin if
+	elseif($ligne['TRA_ROLE']=="Visiteur")
+	{//début if
+		$_SESSION['hierarchie']=0;
+	}//fin if
+
+	$_SESSION['region']=$ligne['REG_CODE'];
+}
+
 /*
  * Fonction qui permet de s'assurer de l'identité de la
  * personne qui essaie de se connecter.
  * @param $idUser
  * @param $mdpUser
 */
-function authentification($idUser, $mdpUser)
-{
+function authentification($idUser, $mdpUser) {
 	$req="select VIS_MATRICULE, VIS_MDP, VIS_GRAINSEL from VISITEUR where VIS_MATRICULE='".$idUser."';";
 	$resultat=mysql_query($req);
 	$maLigne=mysql_fetch_array($resultat);
@@ -19,6 +47,7 @@ function authentification($idUser, $mdpUser)
 	if($mdpUser==$maLigne["VIS_MDP"])
 	{//début if
 		$_SESSION['login']=$idUser;
+		connaitreNiveauHierarchiqueEtRegion($idUser);
 		header('location:index.php');	
 	}//fin if
 	else
@@ -56,8 +85,7 @@ function deconnexion()
  * 
  * return @void
 */
-function optionListDerPraticien()
-{
+function optionListDerPraticien() {
 	$req="select PRA_CODE, PRA_NOM from PRATICIEN order by PRA_NOM;";
 	$resultat=mysql_query($req);
 	?>
@@ -78,8 +106,7 @@ function optionListDerPraticien()
  * 
  * return @void
 */
-function optionListDerMedicament()
-{
+function optionListDerMedicament() {
 	$req="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL from MEDICAMENT;";
 	$resultat=mysql_query($req);
 	?>
@@ -102,8 +129,7 @@ function optionListDerMedicament()
  * 
  * return @void
 */
-function optionDerNumerique()
-{
+function optionDerNumerique() {
 	for($i=0;$i<21;$i++)
 	{//début for
 		?>
@@ -117,7 +143,7 @@ function optionDerNumerique()
  * @param $date au format  jj/mm/aaaa
  * @return string la date au format anglais aaaa-mm-jj
 */
-function convertirDateFrancaisVersAnglais($date){
+function convertirDateFrancaisVersAnglais($date) {
 	@list($jour,$mois,$annee) = explode('/',$date);
 	return date("Y-m-d", mktime(0, 0, 0, $mois, $jour, $annee));
 }
@@ -149,4 +175,5 @@ function filtrerChainePourBD($str) {
     }
     return $str;
 }
+
 ?>

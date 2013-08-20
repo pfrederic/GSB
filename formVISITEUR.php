@@ -9,7 +9,7 @@ if ( ! estVisiteurConnecte() )
 }
 
 include("./scripts/entete.html");
-include("./scripts/menuGauche.html");
+include("./scripts/menuGauche.php");
 if(isset($_POST['btActionFormChoixDep']))
 {//début if
 		$_SESSION['departement']=$_POST['lstDept'];	

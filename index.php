@@ -7,7 +7,7 @@ if ( ! estVisiteurConnecte() )
 }
 
 include("./scripts/entete.html");
-include("./scripts/menuGauche.html");
+include("./scripts/menuGauche.php");
 ?>
 	
 	<div id="contenu">
