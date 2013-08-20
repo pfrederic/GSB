@@ -1,19 +1,20 @@
 <?
-// Ce script est un test afin d'essayer de réaliser des graphiques grâce à la librairie pChart
+// Ce script est un génére un graphique grâce à la librairie pChart, des médicament présenté par les visiteurs d'une région
 
-include("./scripts/parametres.php");
-include("./scripts/fonction.php");
+include("../scripts/parametres.php");
+include("../scripts/fonction.php");
 
 //Catégorie graphique : graphique circulaire
 
 //Appel des fichiers de la librairie nécessaire
- include("./pChart/class/pData.class.php"); 
- include("./pChart/class/pDraw.class.php"); 
- include("./pChart/class/pPie.class.php"); 
- include("./pChart/class/pImage.class.php");
+ include("../pChart/class/pData.class.php"); 
+ include("../pChart/class/pDraw.class.php"); 
+ include("../pChart/class/pPie.class.php"); 
+ include("../pChart/class/pImage.class.php");
 
 //Requête pour données
-$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT natural join PRESENTE natural join RAPPORT_VISITE group by MED_DEPOTLEGAL;";
+$region=$_SESSION['region'];
+$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE inner join VISITEUR on VISITEUR.VIS_MATRICULE=RAPPORT_VISITE.VIS_MATRICULE inner join TRAVAILLER on TRAVAILLER.VIS_MATRICULE=VISITEUR.VIS_MATRICULE where REG_CODE='$region' group by MEDICAMENT.MED_DEPOTLEGAL;";
 $resultat=mysql_query($req);
 while($ligne=mysql_fetch_array($resultat))
 {//début while
@@ -49,11 +50,11 @@ while($ligne=mysql_fetch_array($resultat))
  $myPicture->drawRectangle(0,0,649,299,array("R"=>0,"G"=>0,"B"=>0)); 
 
 //Ecriture d'une titre de l'image 
- $myPicture->setFontProperties(array("FontName"=>"./pChart/fonts/Silkscreen.ttf","FontSize"=>6)); 
+ $myPicture->setFontProperties(array("FontName"=>"../pChart/fonts/Silkscreen.ttf","FontSize"=>6)); 
  $myPicture->drawText(10,13,"Medicament presente pendant les visites",array("R"=>255,"G"=>255,"B"=>255)); 
 
 //Définition de la police d'écriture par défaut
- $myPicture->setFontProperties(array("FontName"=>"./pChart/fonts/Forgotte.ttf","FontSize"=>10,"R"=>80,"G"=>80,"B"=>80)); 
+ $myPicture->setFontProperties(array("FontName"=>"../pChart/fonts/Forgotte.ttf","FontSize"=>10,"R"=>80,"G"=>80,"B"=>80)); 
 
  //Création de l'objet du graphique circulaire 
  $PieChart = new pPie($myPicture,$MyData); 
@@ -70,11 +71,11 @@ while($ligne=mysql_fetch_array($resultat))
  $PieChart->draw3DPie(200,165,array("Radius"=>160,"WriteValues"=>TRUE,"DataGapAngle"=>10,"DataGapRadius"=>6,"Border"=>TRUE)); 
 
 //Ecriture de la légende du graphique
- $myPicture->setFontProperties(array("FontName"=>"./pChart/fonts/pf_arma_five.ttf","FontSize"=>6)); 
+ $myPicture->setFontProperties(array("FontName"=>"../pChart/fonts/pf_arma_five.ttf","FontSize"=>6)); 
  $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20)); 
  $myPicture->drawText(325,275,"Stastistique en pourcentage des mdicament presente lors de visite",array("FontSize"=>8,"DrawBox"=>TRUE,"BoxRounded"=>TRUE,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
 
 //Rendu de l'image
-  $myPicture->autoOutput("./images/testCirculaire.png");
+  $myPicture->autoOutput("../images/medicamentPresente.png");
 
 ?>

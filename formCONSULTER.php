@@ -15,7 +15,7 @@ include("./scripts/menuGauche.php");
 	<form name="formChoixRapport" method="POST" action="">
 		<select name="lstRapport">
 		<?
-		$req="select RAP_CODE from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$_SESSION['region']."' AND RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
+		$req="select RAP_CODE from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$_SESSION['region']."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
 		$resultat=mysql_query($req);
 		while($ligne=mysql_fetch_array($resultat))
 		{//début while

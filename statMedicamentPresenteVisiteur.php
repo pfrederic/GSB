@@ -6,7 +6,7 @@ include("./scripts/menuGauche.php");
 ?>
 <div id="contenu">
 <div width="750px" height="300px">
-<img src="./statistique/graphiqueCirculaireMedicamentPresente.php" alt>
+<img src="./statistique/graphiqueCirculaireMedicamentPresenteVisiteur.php" alt>
 </div>
 </div>
 <?
