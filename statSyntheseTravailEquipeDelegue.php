@@ -5,7 +5,7 @@ include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
 ?>
 <div id="contenu">
-<img src="./statistique/graphiqueCirculaireMedicamentPresente.php" alt>
+<img src="./statistique/graphiqueCirculaireMedicamentPresenteEquipe.php" alt>
 </div>
 <?
 include("./scripts/pied.html");

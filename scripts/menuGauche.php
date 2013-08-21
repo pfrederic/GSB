@@ -1,5 +1,6 @@
 <?
 include("./scripts/parametres.php");
+echo $_SESSION['region'];
 ?>
 <div id="menuGauche">
 <h2>Gestion des visites</h2>
@@ -40,6 +41,12 @@ include("./scripts/parametres.php");
 		{//début if
 		?>
 		<li><a href="statSyntheseTravailVisiteur.php">Synthèse du travail</a></li>
+		<?
+		}//fin if
+		if($_SESSION['hierarchie']==1)
+		{//début if
+		?>
+		<li><a href="statSyntheseTravailEquipeDelegue.php">Synthèse de l'équipe de la région</a></li>
 		<?
 		}//fin if
 		if($_SESSION['hierarchie']==2)

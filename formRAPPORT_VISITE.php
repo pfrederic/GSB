@@ -3,7 +3,7 @@ include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 
 // page inaccessible si visiteur non connecté ou différent d'un visiteur ou d'un délégué
-if ( ! estVisiteurConnecte() || $_SESSION['hierarchie']!=0 || $_SESSION['hierarchie']!=1) 
+if ( ! estVisiteurConnecte() || $_SESSION['hierarchie']==2) 
 {
 	header("Location:index.php");  
 }

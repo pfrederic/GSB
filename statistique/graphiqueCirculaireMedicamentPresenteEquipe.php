@@ -13,8 +13,8 @@ include("../scripts/fonction.php");
  include("../pChart/class/pImage.class.php");
 
 //Requête pour données
-$visiteur=$_SESSION['login'];
-$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE where VIS_MATRICULE='".$visiteur."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month group by MEDICAMENT.MED_DEPOTLEGAL;";
+$region=$_SESSION['region'];
+$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE inner join TRAVAILLER on TRAVAILLER.VIS_MATRICULE=VISITEUR.VIS_MATRICULE where REG_CODE='".$region."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month group by MEDICAMENT.MED_DEPOTLEGAL;";
 $resultat=mysql_query($req);
 while($ligne=mysql_fetch_array($resultat))
 {//début while
