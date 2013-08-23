@@ -14,7 +14,7 @@ include("../scripts/fonction.php");
 
 //Requête pour données
 $region=$_SESSION['region'];
-$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE inner join TRAVAILLER on TRAVAILLER.VIS_MATRICULE=VISITEUR.VIS_MATRICULE where REG_CODE='".$region."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month group by MEDICAMENT.MED_DEPOTLEGAL;";
+$req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE inner join TRAVAILLER on TRAVAILLER.VIS_MATRICULE=RAPPORT_VISITE.VIS_MATRICULE where REG_CODE='".$region."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month group by MEDICAMENT.MED_DEPOTLEGAL;";
 $resultat=mysql_query($req);
 while($ligne=mysql_fetch_array($resultat))
 {//début while
@@ -73,7 +73,7 @@ while($ligne=mysql_fetch_array($resultat))
 //Ecriture de la légende du graphique
  $myPicture->setFontProperties(array("FontName"=>"../pChart/fonts/pf_arma_five.ttf","FontSize"=>6)); 
  $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>20)); 
- $myPicture->drawText(325,275,"Stastistique en pourcentage des medicament presente lors des visites de ces 3 derniers mois",array("FontSize"=>8,"DrawBox"=>TRUE,"BoxRounded"=>TRUE,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
+ $myPicture->drawText(325,275,"Pourcentage des medicaments presente lors des visites de ces 3 derniers mois par vos collaborateurs",array("FontSize"=>8,"DrawBox"=>TRUE,"BoxRounded"=>TRUE,"R"=>0,"G"=>0,"B"=>0,"Align"=>TEXT_ALIGN_TOPMIDDLE));
 
 //Rendu de l'image
   $myPicture->autoOutput("../images/medicamentPresente.png");

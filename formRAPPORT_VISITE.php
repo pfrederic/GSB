@@ -59,7 +59,7 @@ if(isset($_POST['btActionFormRapportVisite']))
 		}//fin else
 		$i++;
 	}//fin while
-	
+	echo("<h3>Rapport de visite enregistre dans la base de donnees</h3>");	
 }//fin if
 
 include("./scripts/entete.html");

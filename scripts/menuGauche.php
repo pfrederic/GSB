@@ -1,6 +1,5 @@
 <?
 include("./scripts/parametres.php");
-echo $_SESSION['region'];
 ?>
 <div id="menuGauche">
 <h2>Gestion des visites</h2>
