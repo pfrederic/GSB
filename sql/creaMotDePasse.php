@@ -1,7 +1,13 @@
 <?php
-include ("./scripts/parametres.php");
+	
+	$host="127.0.0.1";
+	$user="technicien";
+	$mdp="ini01";
+	$db="db_gestionCR";
+	mysql_connect($host,$user,$mdp);
+	mysql_select_db($db);
 
-$req="select VIS_MATRICULE from VISITEUR;";
+$req="select VIS_MATRICULE from VISITEUR";
 $resultat=mysql_query($req);
 while($maLigne=mysql_fetch_array($resultat))
 {//début while

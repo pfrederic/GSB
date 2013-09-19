@@ -15,7 +15,7 @@ include("./scripts/menuGauche.php");
 	<form name="formChoixRapport" method="POST" action="">
 		<select name="lstRapport">
 		<?
-		$req="select RAP_CODE from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$_SESSION['region']."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
+		$req="select RAP_CODE, VIS_NOM, VIS_PRENOM from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$_SESSION['region']."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
 		$resultat=mysql_query($req);
 		while($ligne=mysql_fetch_array($resultat))
 		{//début while
@@ -28,7 +28,7 @@ include("./scripts/menuGauche.php");
 			?>
 			>
 			<?
-			echo $ligne['RAP_CODE'];
+			echo $ligne['RAP_CODE']." ".$ligne['VIS_NOM']." ".$ligne['VIS_PRENOM'];
 			?>
 			</option>
 			<?
@@ -58,7 +58,7 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>DATE DE VISITE</th>
-		    <td><?echo $ligne['RAP_DATEVISITE'];?></td>
+		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATEVISITE']);?></td>
 		  </tr>
 		  <tr>
 		    <th>BILAN</th>
@@ -70,7 +70,7 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>DATE DE SAISIE</th>
-		    <td><?echo $ligne['RAP_DATESAISIE']?></td>
+		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATESAISIE'])?></td>
 		  </tr>
 		  <tr>
 		    <th>PRESENCE DE LA CONCURRENCE</th>

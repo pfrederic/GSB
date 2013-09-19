@@ -85,8 +85,8 @@ function deconnexion()
  * 
  * return @void
 */
-function optionListDerPraticien() {
-	$req="select PRA_CODE, PRA_NOM from PRATICIEN order by PRA_NOM;";
+function optionListDesPraticien() {
+	$req="select PRA_CODE, PRA_NOM, PRA_PRENOM  from PRATICIEN order by PRA_NOM;";
 	$resultat=mysql_query($req);
 	?>
 	<option>Choisissez un praticien</option>
@@ -95,7 +95,7 @@ function optionListDerPraticien() {
 	{
 		$codePrat=$ligne['PRA_CODE'];
 		?>
-		<option value="<?=$codePrat?>"><?=$ligne['PRA_NOM'];?></option>
+		<option value="<?=$codePrat?>"><?=$ligne['PRA_NOM']." ".$ligne['PRA_PRENOM'];?></option>
 		<?
 	}
 }

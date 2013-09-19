@@ -43,18 +43,23 @@ include("./scripts/menuGauche.php");
 		<form name="formListeRecherche"	method="POST" action="" >
 			<select name="lstPrat" class="titre">
 			<?
-			optionListDerPraticien();
+			// fonctions qui permet de récupérer la liste des praticiens
+			optionListDesPraticien();
 			?>
 			</select>
 		<input type="submit" name="Rechercher" value="Rechercher"/>	
 		</form>	
 <?
+//Si on appuye sur le bouton rechercher alors
 if(isset($_POST['Rechercher']))
 {
+	//Récupération du code praticien contenu dans la liste déroulante
         $codePrat=$_POST['lstPrat'];
+	//Requête qui permet de récuperer toute les informations
         $req="select PRA_NOM, PRA_PRENOM, PRA_COEFNOTORIETE, CAB_ADRESSE, CAB_CP, CAB_VILLE from PRATICIEN natural join AFFECTATION natural join CABINET where PRA_CODE='".$codePrat."';";
         $result=mysql_query($req);
 	$maLigne=mysql_fetch_array($result);
+	// on affiche toute les informations récupérer dans un tableau
 	?>
 	<p><h4>Nom : </h4><?=$maLigne['PRA_NOM'];?><h4>Prenom : </h4><?=$maLigne['PRA_PRENOM'];?></p>
 	<?

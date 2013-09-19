@@ -1,5 +1,9 @@
 <?
-include("./scripts/parametres.php");
+
+$hote="127.0.0.1";
+$user="root";
+$mdp="ini01";
+mysql_connect($hote,$user,$mdp);
 
 mysql_query("source /var/www/GSB/sql/PPE_GSB_base.sql");
 echo "DONE 1"."\r\n";

@@ -7,29 +7,30 @@ if ( ! estVisiteurConnecte() || $_SESSION['hierarchie']==2)
 {
 	header("Location:index.php");  
 }
-
+//Si on appuye sur le bouton alors
 if(isset($_POST['btActionFormRapportVisite']))
 {//début if
 	$matriculeVisiteur=$_SESSION['login'];
 	$codeRapport=$_POST['inputCodeRap'];
 	$codePraticien=$_POST['lstPrat'];
-	$dateDeVisite=convertirDateFrancaisVersAnglais($_POST['inputDateVisite']);
+	$dateDeVisite=$_POST['inputDateVisite'];
 	$bilanDuRapport=$_POST['inputBilan'];
 	$motifDeVisite=$_POST['lstMotif'];
 	$coefficiantDeConfiance=$_POST['lstCoeff'];
 	$dateDuJour=date("Y-m-d");
 	$presenceConcurrence=$_POST['lstConcurrence'];
-
+	//Si on coche la case remplaçant
 	if(isset($_POST['checkBoxRemplacant']))
 	{//début if
+		//On affiche dans le bilan que la visite a été réalisé par un remplaçant
 		$bilanDuRapport.=" Visite réalisé auprès d'un remplacant (praticien absent)";
 	}//fin if
 
 	$bilanDuRapport=filtrerChainePourBD($bilanDuRapport);
-
+	//Requête qui permet d'insérer les informations récupérer dans la base de données
 	$req="insert into RAPPORT_VISITE(VIS_MATRICULE, RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, MOT_CODE, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE) values('".$matriculeVisiteur."',".$codeRapport.",".$codePraticien.",'".$dateDeVisite."','".$bilanDuRapport."','".$motifDeVisite."',".$coefficiantDeConfiance.",'".$dateDuJour."','".$presenceConcurrence."');";
 	mysql_query($req);
-	
+	//boucle qui permet d'insérer les produits qui ont été présenté au cours de la visite dans la base de données
 	for($i=1;$i<3;$i++)
 	{//début for
 		$produitPresente=$_POST['lstProd'.$i];
@@ -43,9 +44,10 @@ if(isset($_POST['btActionFormRapportVisite']))
 
 	$bool=false;
 	$i=1;
-
+	//Boucle qui insère dans la base de données les informations sur les échantillons
 	while($bool==false)
 	{//début while
+		//Si il y a des échantillons alors
 		if(isset($_POST['lstEchantillon'.$i]))
 		{//début if
 			$codeEchantillon=$_POST['lstEchantillon'.$i];
@@ -105,15 +107,23 @@ include("./scripts/menuGauche.php");
 			bouton.setAttribute("id","but"+ pNumero);				
         }
     </script>
+<?
+//On récupère le le numéro max des rapports visite
+$requeteRecupNbMax="select max(RAP_CODE) 'nbMax' from RAPPORT_VISITE;";
+$resultat=mysql_query($requeteRecupNbMax);
+$tabNbMax=mysql_fetch_array($resultat);
+$nbMax=$tabNbMax['nbMax']+1;
+//On lui ajoute 1 et on l'affiche
+?>
 <div id="contenu">
 		<form name="formRapportVisite" method="post" action="formRAPPORT_VISITE.php">
 			<h1> Rapport de visite </h1>
 			<p>
-			NUMERO :<input type="text" size="10" name="inputCodeRap" class="zone" />
-			DATE VISITE :<input type="text" size="10" name="inputDateVisite" class="zone" />
+			NUMERO :<input type="text" size="10" name="inputCodeRap" class="zone" value="<?=$nbMax?>" READONLY/>
+			DATE VISITE :<input type="date" size="10" name="inputDateVisite" class="zone"  />
 			</p>
 			<p>
-			PRATICIEN :<select  name="lstPrat" class="zone" ><?optionListDerPraticien();?></select>
+			PRATICIEN :<select  name="lstPrat" class="zone" ><?optionListDesPraticien();?></select>
 			</p>
 			<p>
 			COEFFICIENT :<select name="lstCoeff"><?optionDerNumerique();?></select>
@@ -126,6 +136,7 @@ include("./scripts/menuGauche.php");
 			</p>
 			MOTIF :<select  name="lstMotif" class="zone" onClick="selectionne('AUT',this.value,'inputMotifAutre');">
 			<?
+			//On fait la requête qui permet de récupérer les différents motifs des visistes et ensuite on les affiche dans une liste déroulante
 			$req="select * from MOTIF_VISITE;";
 			$resultat=mysql_query($req);
 			while($ligne=mysql_fetch_array($resultat))
@@ -154,7 +165,7 @@ include("./scripts/menuGauche.php");
 			<h3>Echantillons</h3>
 			<div class="titre" id="lignes">
 				<label class="titre" >Produit : </label>
-				<select name="lstEchantillon1" class="zone"><?optionListDerMedicament();?></select><input type="text" name="inputQteEchantillon1" size="2" class="zone"/>
+				<select name="lstEchantillon1" class="zone"><?optionListDerMedicament();?></select> Quantite :<input type="text" name="inputQteEchantillon1" size="2" class="zone"/>
 				<input type="button" id="but1" value="+" onclick="ajoutLigne(1);" class="zone" />			
 			</div>
 			<p>

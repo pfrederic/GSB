@@ -14,7 +14,7 @@ include("./scripts/menuGauche.php");
 	<form name="formChoixRapport" method="POST" action="">
 		<select name="lstRapport">
 		<?
-		$req="select RAP_CODE from RAPPORT_VISITE where VIS_MATRICULE='".$_SESSION['login']."' AND RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
+		$req="select RAP_CODE, RAP_DATESAISIE from RAPPORT_VISITE where VIS_MATRICULE='".$_SESSION['login']."' AND RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
 		$resultat=mysql_query($req);
 		while($ligne=mysql_fetch_array($resultat))
 		{//début while
@@ -27,7 +27,7 @@ include("./scripts/menuGauche.php");
 			?>
 			>
 			<?
-			echo $ligne['RAP_CODE'];
+			echo $ligne['RAP_CODE']." ".convertirDateAnglaisVersFrancais($ligne['RAP_DATESAISIE']);
 			?>
 			</option>
 			<?
@@ -57,7 +57,7 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>DATE DE VISITE</th>
-		    <td><?echo $ligne['RAP_DATEVISITE'];?></td>
+		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATEVISITE']);?></td>
 		  </tr>
 		  <tr>
 		    <th>BILAN</th>
@@ -69,7 +69,7 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>DATE DE SAISIE</th>
-		    <td><?echo $ligne['RAP_DATESAISIE']?></td>
+		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATESAISIE'])?></td>
 		  </tr>
 		  <tr>
 		    <th>PRESENCE DE LA CONCURRENCE</th>

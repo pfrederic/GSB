@@ -3,7 +3,6 @@ include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
-
 ?>
 <div id="contenu">
 <h2>Medicament Presente</h2>
