@@ -76,7 +76,7 @@ function deconnexion()
 {
 	session_destroy();
 
-	header('Location:login.php');
+	header('Location:https://127.0.0.1/login.php');
 }
 
 /**

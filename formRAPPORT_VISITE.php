@@ -5,7 +5,7 @@ include("./scripts/fonction.php");
 // page inaccessible si visiteur non connecté ou différent d'un visiteur ou d'un délégué
 if ( ! estVisiteurConnecte() || $_SESSION['hierarchie']==2) 
 {
-	header("Location:index.php");  
+	header("Location:index.php");
 }
 //Si on appuye sur le bouton alors
 if(isset($_POST['btActionFormRapportVisite']))

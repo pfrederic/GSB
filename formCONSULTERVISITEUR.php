@@ -2,13 +2,14 @@
 include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 
-if(!estVisiteurConnecte())
+if(!estVisiteurConnecte()||$_SESSION['hierarchie']!=1)
 {//début if
-	header('location: login.php');
+	header('location: index.php');
 }//fin if
 
 include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
+
 ?>
 <div id="contenu">
 	<form name="formChoixRapport" method="POST" action="">
@@ -45,6 +46,10 @@ include("./scripts/menuGauche.php");
 		$req="select RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE, MOT_LIB from RAPPORT_VISITE natural join MOTIF_VISITE where RAP_CODE='".$_POST['lstRapport']."';";
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
+		$praCode=$ligne['PRA_CODE'];
+		$req2="select PRA_NOM,PRA_PRENOM from PRATICIEN where PRA_CODE='$praCode';";
+		$resultat2=mysql_query($req2);
+		$ligne2=mysql_fetch_array($resultat2);
 		?>
 		<table>
 		  <tr>
@@ -53,15 +58,15 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>PRATICIEN</th>
-		    <td><?echo $ligne['PRA_CODE'];?></td>
+		    <td><?echo $ligne2['PRA_NOM'];?> <?=$ligne2['PRA_PRENOM'];?></td>
 		  </tr>
 		  <tr>
 		    <th>DATE DE VISITE</th>
-		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATEVISITE']);?></td>
+		    <td><input STYLE="text-align:center" type="text" value="<?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATEVISITE']);?>" name="dateVisite"</td>
 		  </tr>
 		  <tr>
 		    <th>BILAN</th>
-		    <td><?echo $ligne['RAP_BILAN'];?></td>
+		    <td><textArea STYLE="resize:none" name="bilan" cols="40" rows="6"><?echo $ligne['RAP_BILAN'];?></textArea></td>
 		  </tr>
 		  <tr>
 		    <th>COEFFICIEN DE CONFIANCE</th>
@@ -69,7 +74,7 @@ include("./scripts/menuGauche.php");
 		  </tr>
 		  <tr>
 		    <th>DATE DE SAISIE</th>
-		    <td><?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATESAISIE'])?></td>
+		    <td><input type="text" STYLE="text-align:center" name="dateSaisie" value="<?echo convertirDateAnglaisVersFrancais($ligne['RAP_DATESAISIE'])?>"</td>
 		  </tr>
 		  <tr>
 		    <th>PRESENCE DE LA CONCURRENCE</th>

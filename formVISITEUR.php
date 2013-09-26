@@ -5,7 +5,7 @@ include("./scripts/fonction.php");
 // page inaccessible si visiteur non connecté
 if ( ! estVisiteurConnecte() ) 
 {
-	header("Location:login.php");  
+	header('location: https://127.0.0.1/GSB/login.php');
 }
 
 include("./scripts/entete.html");
@@ -85,19 +85,30 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 				$resultat=mysql_query($req);
 				$maLigne=mysql_fetch_array($resultat);
 				?>
+				<p><h4>NOM : </h4><?=$maLigne['VIS_NOM']?></p>
+				<p><h4>PRENOM : </h4><?=$maLigne['VIS_PRENOM']?></p>
 				<p>
-				NOM :<input type="text" size="7" name="VIS_NOM" class="zone" value="<?=$maLigne['VIS_NOM']?>" />
-				PRENOM :<input type="text" size="7" name="Vis_PRENOM" class="zone" value="<?=$maLigne['VIS_PRENOM']?>" />
-				</p>
-				<p>
-				ADRESSE :<input type="text" size="20" name="VIS_ADRESSE" class="zone" value="<?=$maLigne['VIS_ADRESSE']?>"/>
+				<table>
+				<tr>
+					<th>Adresse</th>
+					<th>Code Postal</th>
+					<th>Ville</th>
+					<th>Secteur</th>
+				</tr>
+				<tr>
+					<td><?=$maLigne['VIS_ADRESSE']?></td>
+					<td><?=$maLigne['VIS_CP']?></td>
+					<td><?=$maLigne['VIS_VILLE']?></td>
+					<td><?=$maLigne['SEC_CODE']?></td>
+				</tr>
+				</table>
+				<!-- ADRESSE :<input type="text" size="20" name="VIS_ADRESSE" class="zone" value="<?=$maLigne['VIS_ADRESSE']?>"/>
 				CP :<input type="text" size="5" name="VIS_CP" class="zone" value="<?=$maLigne['VIS_CP']?>"/>
 				VILLE :<input type="text" size="20" name="VIS_VILLE" class="zone" value="<?=$maLigne['VIS_VILLE']?>"/>
 				</p>
 				<p>
 				SECTEUR :<input type="text" size="1" name="SEC_CODE" class="zone" value="<?=$maLigne['VIS_SECTEUR']?>"/>
-				</p>
-				<input class="zone" type="button" value="<"></input><input class="zone" type="button" value=">"></input>
+				</p> -->
 			</form>
 		<?
 		}//fin if

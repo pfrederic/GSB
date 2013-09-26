@@ -3,7 +3,7 @@ include("scripts/fonction.php");
 // page inaccessible si visiteur non connecté
 if ( ! estVisiteurConnecte() ) 
 {
-	header("Location:login.php");  
+	header('location: https://127.0.0.1/GSB/login.php');
 }
 
 include("./scripts/entete.html");
