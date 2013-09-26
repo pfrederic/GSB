@@ -76,7 +76,7 @@ function deconnexion()
 {
 	session_destroy();
 
-	header('Location:https://127.0.0.1/login.php');
+	header('Location:https://127.0.0.1/GSB/login.php');
 }
 
 /**
@@ -89,7 +89,7 @@ function optionListDesPraticien() {
 	$req="select PRA_CODE, PRA_NOM, PRA_PRENOM  from PRATICIEN order by PRA_NOM;";
 	$resultat=mysql_query($req);
 	?>
-	<option>Choisissez un praticien</option>
+	<option value="0">Choisissez un praticien</option>
 	<?
 	while($ligne=mysql_fetch_array($resultat))
 	{

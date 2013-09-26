@@ -21,12 +21,17 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 }//fin if
 ?>
 <div id="contenu">
-	<form name="formChoixDep" method="post" action="">
+	<form name="formAfficheVisiteur" method="post" action="">
 		<h1> Visiteurs </h1>
 		<?
 		// récupération des département
 		$req="select distinct DEP_CODE, DEP_NOM from VISITEUR natural join DEPARTEMENT order by DEP_NOM;";
 		$resultat=mysql_query($req);
+
+		$reqDepVisiteur="select DEP_CODE from VISITEUR natural join DEPARTEMENT where VIS_MATRICULE='".$_SESSION['login']."';";
+		$resultatDepVisiteur=mysql_query($reqDepVisiteur);
+		$ligneDepVisiteur=mysql_fetch_array($resultatDepVisiteur);
+		$depCodeVisiteur=$ligneDepVisiteur['DEP_CODE'];
 		?>
 		<select name="lstDept" class="titre">
 		<?
@@ -41,6 +46,10 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 			{//début if
 				echo "selected";
 			}//fin if
+			elseif($depCodeVisiteur==$codeDep)
+			{
+				echo "selected";
+			}
 			?>
 			><?=$nomDep?></option>
 		<?
@@ -48,12 +57,10 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 		?>
 		</select>
 		<input type="submit" name="btActionFormChoixDep" value="Selectionner"/>
-		</form>
 		<?
 		if((isset($_POST['btActionFormChoixDep']))||(isset($_POST['btActionFormChoixVisiteur'])))
 		{//début if
 		?>
-			<form name="formChoixVisiteur" method="POST">
 				<select name="lstVisiteur" class="zone">
 				<?
 				$req="select VIS_MATRICULE, VIS_NOM, VIS_PRENOM from VISITEUR where DEP_CODE='".$_SESSION['departement']."';";
@@ -72,15 +79,12 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 				}//fin while
 				?>
 				</select>
-				<input type="submit" name="btActionFormChoixVisiteur" value="Séléctionner" />
+				<input type="submit" name="btActionFormChoixVisiteur" value="Afficher" />
 			</form>
 			<?
 		}//fin if
 		if(isset($_POST['btActionFormChoixVisiteur']))
 		{//début if
-			?>
-			<form name="formAffiVisiteur" method="POST" action="">
-				<?
 				$req="select VIS_NOM, VIS_PRENOM, VIS_ADRESSE, VIS_CP, VIS_VILLE, SEC_CODE from VISITEUR where VIS_MATRICULE='".$_SESSION['visiteur']."';";
 				$resultat=mysql_query($req);
 				$maLigne=mysql_fetch_array($resultat);
@@ -102,14 +106,6 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 					<td><?=$maLigne['SEC_CODE']?></td>
 				</tr>
 				</table>
-				<!-- ADRESSE :<input type="text" size="20" name="VIS_ADRESSE" class="zone" value="<?=$maLigne['VIS_ADRESSE']?>"/>
-				CP :<input type="text" size="5" name="VIS_CP" class="zone" value="<?=$maLigne['VIS_CP']?>"/>
-				VILLE :<input type="text" size="20" name="VIS_VILLE" class="zone" value="<?=$maLigne['VIS_VILLE']?>"/>
-				</p>
-				<p>
-				SECTEUR :<input type="text" size="1" name="SEC_CODE" class="zone" value="<?=$maLigne['VIS_SECTEUR']?>"/>
-				</p> -->
-			</form>
 		<?
 		}//fin if
 		?>
