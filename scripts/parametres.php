@@ -1,6 +1,6 @@
 <?
 //$hote="172.16.51.15";
-$hote="127.0.0.1";
+$hote="localhost";
 $user="technicien";
 $mdp="ini01";
 $base="db_gestionCR";

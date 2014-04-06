@@ -3,10 +3,7 @@ include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 
 // page inaccessible si visiteur non connecté
-if ( ! estVisiteurConnecte() ) 
-{
-	header('location: https://127.0.0.1/GSB/login.php'); 
-}
+estVisiteurConnecte();
 
 include("./scripts/entete.html");
 /*

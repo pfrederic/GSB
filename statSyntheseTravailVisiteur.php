@@ -4,11 +4,8 @@ include("./scripts/fonction.php");
 include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
 
-if(!estVisiteurConnecte())
-{//début if
-	header('location: https://127.0.0.1/GSB/login.php');
-}//fin if
-
+//page inaccessible si visiteur non connecté
+estVisiteurConnecte();
 ?>
 <div id="contenu">
 <h2>Medicament Presente</h2>

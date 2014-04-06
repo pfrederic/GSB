@@ -2,10 +2,9 @@
 include("./scripts/parametres.php");
 include("./scripts/fonction.php");
 
-if(!estVisiteurConnecte())
-{//début if
-	header('location: login.php');
-}//fin if
+//Vérifie si le visiteur est connecté et si c'est un délégué
+estVisiteurConnecte();
+verifDroitAcces(1);
 
 include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
@@ -132,31 +131,31 @@ include("./scripts/menuGauche.php");
 		}//fin if
 		else
 		{//début else
-		$resultat=mysql_query($req);
-		?>
-		<table>
-			<thead>
-				<th>NOM DE L'ECHANTILLON</th>
-				<th>QUANTITE OFFERTE</th>
-			</thead>
-			<tbody>
-		<?
-		while($ligne=mysql_fetch_array($resultat))
-		{//début while
+			$resultat=mysql_query($req);
 			?>
-			<tr>
-			  <td><?echo $ligne['MED_NOMCOMMERCIAL'];?></td>
-			  <td><?echo $ligne['OFF_QTE'];?></td>
-			</tr>
-			<?	
-		}//fin while
-		?>
-			</tbody>
-		</table>
-		<?
+			<table>
+				<thead>
+					<th>NOM DE L'ECHANTILLON</th>
+					<th>QUANTITE OFFERTE</th>
+				</thead>
+				<tbody>
+			<?
+			while($ligne=mysql_fetch_array($resultat))
+			{//début while
+				?>
+				<tr>
+				 	<td><?echo $ligne['MED_NOMCOMMERCIAL'];?></td>
+				 	<td><?echo $ligne['OFF_QTE'];?></td>
+				</tr>
+				<?	
+			}//fin while
+			?>
+				</tbody>
+			</table>
+			<?
 		}//fin else
 	}//fin if
-	?>
+		?>
 </div>
 <?
 

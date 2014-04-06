@@ -4,10 +4,9 @@ include("./scripts/fonction.php");
 include("./scripts/entete.html");
 include("./scripts/menuGauche.php");
 
-if(!estVisiteurConnecte())
-{//début if
-	header('location: https://127.0.0.1/GSB/login.php');
-}//fin if
+//page inaccessible si visiteur non connecté et aux personnes autres que les responsables
+estVisiteurConnecte();
+verifDroitAcces(2);
 
 ?>
 <div id="contenu">

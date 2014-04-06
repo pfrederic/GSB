@@ -64,7 +64,25 @@ function authentification($idUser, $mdpUser) {
  */
 function estVisiteurConnecte() {
     // actuellement il n'y a que les visiteurs qui se connectent
-    return isset($_SESSION["login"]);
+    if(!isset($_SESSION["login"]))
+    {
+	header('location: login.php');
+    }
+}
+
+/**
+ * Vérifie que le niveau du droit d'accès du visiteur connecté soit bien celui passé en paramètre.
+ * 
+ * Cette fonction redirige vers la page d'accueil.
+ * @param int $niveau niveau nécessaire de droit
+ * @param int $niveauBis un second niveau nécessaire de droit. Valeur NULL par défaut.
+ * @return void
+*/
+function verifDroitAcces($niveau, $niveauBis=NULL) {
+    if($_SESSION['hierarchie']!=$niveau && $_SESSION['hierarchie']!=$niveauBis)
+    {
+	header('Location: index.php');
+    }
 }
 
 /**
@@ -76,7 +94,8 @@ function deconnexion()
 {
 	session_destroy();
 
-	header('Location:https://127.0.0.1/GSB/login.php');
+	//header('Location:https://127.0.0.1/GSB/login.php');
+	header('Location:login.php');
 }
 
 /**
@@ -140,7 +159,7 @@ function optionDerNumerique() {
 
 /**
  * Transforme une date au format français jj/mm/aaaa vers le format anglais aaaa-mm-jj
- * @param $date au format  jj/mm/aaaa
+ * @param date $date au format  jj/mm/aaaa
  * @return string la date au format anglais aaaa-mm-jj
 */
 function convertirDateFrancaisVersAnglais($date) {
@@ -151,7 +170,7 @@ function convertirDateFrancaisVersAnglais($date) {
 /**
  * Transforme une date au format format anglais aaaa-mm-jj vers le format 
  * français jj/mm/aaaa 
- * @param $date au format  aaaa-mm-jj
+ * @param date $date au format  aaaa-mm-jj
  * @return string la date au format format français jj/mm/aaaa
 */
 function convertirDateAnglaisVersFrancais($date){
@@ -176,4 +195,64 @@ function filtrerChainePourBD($str) {
     return $str;
 }
 
+/**
+ * Fonction qui génère les opitions d'une liste déroulante de tous les
+ * praticiens de la base de données en sélectionnant un praticien passé en paramètre.
+ * 
+ * return @void
+*/
+function optionListDesPraticienAvecPraticienSelected($praCode) {
+         $req="select PRA_CODE, PRA_NOM, PRA_PRENOM  from PRATICIEN order by PRA_NOM;";
+         $resultat=mysql_query($req);
+         ?>
+         <option>Choisissez un praticien</option>
+         <?
+         while($ligne=mysql_fetch_array($resultat))
+         {
+                 $codePrat=$ligne['PRA_CODE'];
+                 ?>
+                 <option value="<?=$codePrat?>"<?if($codePrat==$praCode) echo " selected";?> ><?=$ligne['PRA_NOM']." ".$ligne['PRA_PRENOM'];?></option>
+                 <?
+         }
+}
+
+/**
+ * Fonction qui génère les options d'une liste déroulante de tous les
+ * médicament de la base de données en selectionnant un medicament passé en paramètre.
+ * 
+ * return @void
+*/
+function optionListDerMedicamentAvecMedicamentSelected($medicCode) {
+	$req="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL from MEDICAMENT;";
+	$resultat=mysql_query($req);
+	?>
+	<option value="0">Choisissez un médicament</option>
+	<?
+	while($ligne=mysql_fetch_array($resultat))
+	{//début while
+		$codeMedoc=$ligne['MED_DEPOTLEGAL'];
+		?>
+		<option value="<?=$codeMedoc?>"<?if($codeMedoc==$medicCode) echo " selected";?>><?echo $ligne['MED_NOMCOMMERCIAL'];?></option>
+		<?
+	}//fin while
+}
+
+
+/** 
+ * Fonction qui génére les options d'une liste déroulante
+ * qui contient des valeurs numérique allant de 0 à 20.
+ * Ces options serviront notament pour noter le praticien sur 
+ * la connaissance du produit en autre.
+ * La liste affichera par défaut le numéro passé en paramètre.
+ *
+ * return @void
+*/
+function optionDerNumeriqueAvecNumeroSelected($note) {
+	for($i=0;$i<21;$i++)
+	{//début for
+		?>
+		<option value="<?=$i?>"<?if($i==$note) echo " selected";?> ><?echo $i;?></option>
+		<?
+	}//fin for
+}
 ?>
