@@ -7,18 +7,20 @@ verifDroitAcces(0, 1);
 
 if(isset($_POST['Modifier']))
 {
-//A finir!!!
-//RAPPORT_VISITE, OFFRIR (echantillon), PRESENTE(medicaments)
-$praCode=$_POST['lstPrat'];
-$bool=false;
-$i=0;
-$req="update RAPPORT_VISITE set PRA_CODE=".$praCode.", RAP_DATEVISITE='".$_POST['dateVisite']."', RAP_BILAN='".$_POST['bilan']."', MOT_CODE='".$_POST['lstMotif']."', RAP_COEFCONFIANCE='".$_POST['coeffConfiance']."', RAP_DATESAISIE='".$_POST['dateSaisie']."', RAP_CONCURRENCE='".$_POST['lstConcurrence']."' where VIS_MATRICULE='".$_SESSION['login']."' and RAP_CODE=".$_POST['rapCode'];
-mysql_query($req);
+	//A finir!!!
+	//RAPPORT_VISITE, OFFRIR (echantillon), PRESENTE(medicaments)
+	$praCode=$_POST['lstPrat'];
+	$bool=false;
+	$i=0;
+	$req="update RAPPORT_VISITE set PRA_CODE=".$praCode.", RAP_DATEVISITE='".$_POST['dateVisite']."', RAP_BILAN='".$_POST['bilan']."', MOT_CODE='".$_POST['lstMotif']."', RAP_COEFCONFIANCE='".$_POST['coeffConfiance']."', RAP_DATESAISIE='".$_POST['dateSaisie']."', RAP_CONCURRENCE='".$_POST['lstConcurrence']."' where VIS_MATRICULE='".$_SESSION['login']."' and RAP_CODE=".$_POST['rapCode'];
+	//echo $req;
+	mysql_query($req);
 	while($bool==false)
 	{//début while
 		if(isset($_POST['lstMedic'.$i]))
 		{//début if
 			$req="update PRESENTE set MED_DEPOTLEGAL='".$_POST['lstMedic'.$i]."', PRE_CONNAISSANCE=".$_POST['lstNoteMedic'.$i]." where MED_DEPOTLEGAL='".$_POST['hiddenMedic'.$i]."' and RAP_CODE=".$_POST['rapCode'];
+			//echo $req;
 			mysql_query($req);
 		}//fin if
 		else
@@ -35,6 +37,7 @@ mysql_query($req);
 		if(isset($_POST['lstEchantillon'.$i]))
 		{//début if
 			$req="update OFFRIR set MED_DEPOTLEGAL='".$_POST['lstEchantillon'.$i]."', OFF_QTE=".$_POST['qteEchantillon'.$i]." where VIS_MATRICULE='".$_SESSION['login']."' and RAP_CODE=".$_POST['rapCode']." and MED_DEPOTLEGAL='".$_POST['ancienEchantillon'.$i]."'";
+			//echo $req;
 			mysql_query($req);
 		}//fin if
 		else
@@ -54,6 +57,7 @@ include("./scripts/menuGauche.php");
 		<select name="lstRapport">
 		<?
 		$req="select RAP_CODE, RAP_DATESAISIE from RAPPORT_VISITE where VIS_MATRICULE='".$_SESSION['login']."' AND RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
+		//echo $req;
 		$resultat=mysql_query($req);
 		while($ligne=mysql_fetch_array($resultat))
 		{//début while
@@ -83,11 +87,13 @@ include("./scripts/menuGauche.php");
 		<form name="formSyntheseVisite" action="" method="POST">
 		<?
 		$req="select RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE, MOT_CODE from RAPPORT_VISITE natural join MOTIF_VISITE where RAP_CODE='".$_POST['lstRapport']."';";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		$praCode=$ligne['PRA_CODE'];
 		$motifCode=$ligne['MOT_CODE'];
 		$req2="select PRA_NOM,PRA_PRENOM from PRATICIEN where PRA_CODE='$praCode';";
+		//echo $req;
 		$resultat2=mysql_query($req2);
 		$ligne2=mysql_fetch_array($resultat2);
 		?>
@@ -132,6 +138,7 @@ include("./scripts/menuGauche.php");
 		    <td><select name="lstMotif">
 			<?
 			$req="select * from MOTIF_VISITE;";
+			//echo $req;
 			$resultat=mysql_query($req);
 			while($ligne=mysql_fetch_array($resultat))
 			{
@@ -147,6 +154,7 @@ include("./scripts/menuGauche.php");
 		<h2>Médicament présenté</h2>
 		<?
 		$req="select MED_DEPOTLEGAL, PRE_CONNAISSANCE from MEDICAMENT natural join PRESENTE where RAP_CODE=".$_POST['lstRapport'].";";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		if(empty($ligne))
@@ -186,6 +194,7 @@ include("./scripts/menuGauche.php");
 		<h2>Echantillon offert</h2>
 		<?
 		$req="select MED_DEPOTLEGAL, OFF_QTE from MEDICAMENT natural join OFFRIR where RAP_CODE=".$_POST['lstRapport'].";";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		if(empty($ligne))

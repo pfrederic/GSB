@@ -26,9 +26,11 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 		<?
 		// récupération des département
 		$req="select distinct DEP_CODE, DEP_NOM from VISITEUR natural join DEPARTEMENT order by DEP_NOM;";
+		//echo $req;
 		$resultat=mysql_query($req);
 
 		$reqDepVisiteur="select DEP_CODE from VISITEUR natural join DEPARTEMENT where VIS_MATRICULE='".$_SESSION['login']."';";
+		//echo $reqDepVisiteur;
 		$resultatDepVisiteur=mysql_query($reqDepVisiteur);
 		$ligneDepVisiteur=mysql_fetch_array($resultatDepVisiteur);
 		$depCodeVisiteur=$ligneDepVisiteur['DEP_CODE'];
@@ -64,6 +66,7 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 				<select name="lstVisiteur" class="zone">
 				<?
 				$req="select VIS_MATRICULE, VIS_NOM, VIS_PRENOM from VISITEUR where DEP_CODE='".$_SESSION['departement']."';";
+				//echo $req;
 				$resultat=mysql_query($req);
 				while($maLigne=mysql_fetch_array($resultat))
 				{//début while
@@ -86,6 +89,7 @@ if(isset($_POST['btActionFormChoixVisiteur']))
 		if(isset($_POST['btActionFormChoixVisiteur']))
 		{//début if
 				$req="select VIS_NOM, VIS_PRENOM, VIS_ADRESSE, VIS_CP, VIS_VILLE, SEC_CODE from VISITEUR where VIS_MATRICULE='".$_SESSION['visiteur']."';";
+				//echo $req;
 				$resultat=mysql_query($req);
 				$maLigne=mysql_fetch_array($resultat);
 				?>

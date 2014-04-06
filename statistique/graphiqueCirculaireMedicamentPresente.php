@@ -15,6 +15,7 @@ include("../scripts/fonction.php");
 //Requête pour données
 $region=$_SESSION['region'];
 $req="select MED_NOMCOMMERCIAL, count(*) nbFois from MEDICAMENT inner join PRESENTE on MEDICAMENT.MED_DEPOTLEGAL=PRESENTE.MED_DEPOTLEGAL inner join RAPPORT_VISITE on RAPPORT_VISITE.RAP_CODE=PRESENTE.RAP_CODE inner join VISITEUR on VISITEUR.VIS_MATRICULE=RAPPORT_VISITE.VIS_MATRICULE inner join TRAVAILLER on TRAVAILLER.VIS_MATRICULE=VISITEUR.VIS_MATRICULE where REG_CODE='$region' group by MEDICAMENT.MED_DEPOTLEGAL;";
+//echo $req;
 $resultat=mysql_query($req);
 while($ligne=mysql_fetch_array($resultat))
 {//début while

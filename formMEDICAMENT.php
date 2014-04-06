@@ -47,18 +47,22 @@ include("./scripts/menuGauche.php");
 			if($operateurPrix=='>')
 			{//début if
 				$requeteRechercheMedicament="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL, FAM_CODE, MED_COMPOSITION, MED_EFFETS, MED_CONTREINDIC, MED_PRIXECHANTILLON from MEDICAMENT where MED_DEPOTLEGAL like '%".$depotLegal."%' and MED_NOMCOMMERCIAL like '%".$nomCommercial."%' and FAM_CODE like '%".$familleMedicament."%' and MED_COMPOSITION like '%".$compositionMedicament."%' and MED_PRIXECHANTILLON >".$prixEchantillon.";";
+				//echo $requeteRechercheMedicament;
 			}//fin if
 			elseif($operateurPrix=='=')
 			{//début elseif
 				$requeteRechercheMedicament="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL, FAM_CODE, MED_COMPOSITION, MED_EFFETS, MED_CONTREINDIC, MED_PRIXECHANTILLON from MEDICAMENT where MED_DEPOTLEGAL like '%".$depotLegal."%' and MED_NOMCOMMERCIAL like '%".$nomCommercial."%' and FAM_CODE like '%".$familleMedicament."%' and MED_COMPOSITION like '%".$compositionMedicament."%' and MED_PRIXECHANTILLON =".$prixEchantillon.";";
+				//echo $requeteRechercheMedicament;
 			}//fin elseif
 			elseif($operateurPrix=='<')
 			{//début elseif
 				$requeteRechercheMedicament="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL, FAM_CODE, MED_COMPOSITION, MED_EFFETS, MED_CONTREINDIC, MED_PRIXECHANTILLON from MEDICAMENT where MED_DEPOTLEGAL like '%".$depotLegal."%' and MED_NOMCOMMERCIAL like '%".$nomCommercial."%' and FAM_CODE like '%".$familleMedicament."%' and MED_COMPOSITION like '%".$compositionMedicament."%' and MED_PRIXECHANTILLON < ".$prixEchantillon.";";
+				//echo $requeteRechercheMedicament;
 			}//fin elseif
 			else
 			{//début else
 				$requeteRechercheMedicament="select MED_DEPOTLEGAL, MED_NOMCOMMERCIAL, FAM_CODE, MED_COMPOSITION, MED_EFFETS, MED_CONTREINDIC, MED_PRIXECHANTILLON from MEDICAMENT where MED_DEPOTLEGAL like '%".$depotLegal."%' and MED_NOMCOMMERCIAL like '%".$nomCommercial."%' and FAM_CODE like '%".$familleMedicament."%' and MED_COMPOSITION like '%".$compositionMedicament."%';";
+				//echo $requeteRechercheMedicament;
 			}//fin else
 			$resultatRechercheMedicament=mysql_query($requeteRechercheMedicament);
 			$tabRechercheMedicament=mysql_fetch_array($resultatRechercheMedicament);

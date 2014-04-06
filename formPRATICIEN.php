@@ -60,6 +60,7 @@ if(isset($_POST['Rechercher']))
 	{//début else
 		//Requête qui permet de récuperer toute les informations
         	$req="select PRA_NOM, PRA_PRENOM, PRA_COEFNOTORIETE, CAB_ADRESSE, CAB_CP, CAB_VILLE from PRATICIEN natural join AFFECTATION natural join CABINET where PRA_CODE='".$codePrat."';";
+		//echo $req;
         	$result=mysql_query($req);
 		$maLigne=mysql_fetch_array($result);
 		// on affiche toute les informations récupérer dans un tableau

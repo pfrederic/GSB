@@ -17,6 +17,7 @@ include("../scripts/fonction.php");
 
 $visiteur=$_SESSION['login'];
 $req="select MOT_LIB, count(*) nbFois from MOTIF_VISITE inner join RAPPORT_VISITE on RAPPORT_VISITE.MOT_CODE=MOTIF_VISITE.MOT_CODE where VIS_MATRICULE='".$visiteur."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month group by MOTIF_VISITE.MOT_CODE;";
+//echo $req;
 $resultat=mysql_query($req);
 
 while($ligne=mysql_fetch_array($resultat))

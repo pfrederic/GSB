@@ -14,6 +14,7 @@ include("./scripts/menuGauche.php");
 		<select name="lstRapport">
 		<?
 		$req="select RAP_CODE, VIS_NOM, VIS_PRENOM from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$_SESSION['region']."' and RAP_DATEVISITE>CURRENT_DATE-interval 3 month;";
+		//echo $req;
 		$resultat=mysql_query($req);
 		while($ligne=mysql_fetch_array($resultat))
 		{//début while
@@ -42,10 +43,12 @@ include("./scripts/menuGauche.php");
 		<h2>Synthèse de la visite</h2>
 		<?
 		$req="select RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE, MOT_LIB from RAPPORT_VISITE natural join MOTIF_VISITE where RAP_CODE='".$_POST['lstRapport']."';";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		$praCode=$ligne['PRA_CODE'];
 		$req2="select PRA_NOM,PRA_PRENOM from PRATICIEN where PRA_CODE='$praCode';";
+		//echo $req2;
 		$resultat2=mysql_query($req2);
 		$ligne2=mysql_fetch_array($resultat2);
 		?>
@@ -87,6 +90,7 @@ include("./scripts/menuGauche.php");
 		<h2>Médicament présenté</h2>
 		<?
 		$req="select MED_NOMCOMMERCIAL, PRE_CONNAISSANCE from MEDICAMENT natural join PRESENTE where RAP_CODE=".$_POST['lstRapport'].";";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		if(empty($ligne))
@@ -123,6 +127,7 @@ include("./scripts/menuGauche.php");
 		<h2>Echantillon offert</h2>
 		<?
 		$req="select MED_NOMCOMMERCIAL, OFF_QTE from MEDICAMENT natural join OFFRIR where RAP_CODE=".$_POST['lstRapport'].";";
+		//echo $req;
 		$resultat=mysql_query($req);
 		$ligne=mysql_fetch_array($resultat);
 		if(empty($ligne))

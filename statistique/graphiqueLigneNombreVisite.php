@@ -18,6 +18,7 @@
 
  //Requête permettant de connaître selon le mois de l'années le nombre de visites réalisé par les visiteur d'une région
  $req="select substring(RAP_DATEVISITE,6,2) mois, count(*) nbVisite from RAPPORT_VISITE inner join VISITEUR on RAPPORT_VISITE.VIS_MATRICULE=VISITEUR.VIS_MATRICULE inner join TRAVAILLER on VISITEUR.VIS_MATRICULE=TRAVAILLER.VIS_MATRICULE where REG_CODE='".$region."' and RAP_DATEVISITE>CURRENT_DATE-interval 1 year group by mois;";
+//echo $req;
  //Envoie de la requête
  $resultat=mysql_query($req);
  //Boucle qui parcours les occurences

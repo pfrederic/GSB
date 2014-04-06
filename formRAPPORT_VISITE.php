@@ -28,6 +28,7 @@ if(isset($_POST['btActionFormRapportVisite']))
 	$bilanDuRapport=filtrerChainePourBD($bilanDuRapport);
 	//Requête qui permet d'insérer les informations récupérer dans la base de données
 	$req="insert into RAPPORT_VISITE(VIS_MATRICULE, RAP_CODE, PRA_CODE, RAP_DATEVISITE, RAP_BILAN, MOT_CODE, RAP_COEFCONFIANCE, RAP_DATESAISIE, RAP_CONCURRENCE) values('".$matriculeVisiteur."',".$codeRapport.",".$codePraticien.",'".$dateDeVisite."','".$bilanDuRapport."','".$motifDeVisite."',".$coefficiantDeConfiance.",'".$dateDuJour."','".$presenceConcurrence."');";
+	//echo $req;
 	mysql_query($req);
 	//boucle qui permet d'insérer les produits qui ont été présenté au cours de la visite dans la base de données
 	for($i=1;$i<3;$i++)
@@ -37,6 +38,7 @@ if(isset($_POST['btActionFormRapportVisite']))
 		if($produitPresente!='0')
 		{//début if
 			$req="insert into PRESENTE values('".$produitPresente."',".$codeRapport.",".$connaissanceProduitPresente.");";
+			//echo $req;
 			mysql_query($req);
 		}//fin if
 	}//fin for
@@ -52,6 +54,7 @@ if(isset($_POST['btActionFormRapportVisite']))
 			$codeEchantillon=$_POST['lstEchantillon'.$i];
 			$quantiteEchantillon=$_POST['inputQteEchantillon'.$i];
 			$req="insert into OFFRIR values('".$matriculeVisiteur."',".$codeRapport.",'".$codeEchantillon."',".$quantiteEchantillon.");";
+			//echo $req;
 			mysql_query($req);
 		}//fin if
 		else
@@ -136,7 +139,8 @@ $nbMax=$tabNbMax['nbMax']+1;
 			MOTIF :<select  name="lstMotif" class="zone" onClick="selectionne('AUT',this.value,'inputMotifAutre');">
 			<?
 			//On fait la requête qui permet de récupérer les différents motifs des visistes et ensuite on les affiche dans une liste déroulante
-			$req="select * from MOTIF_VISITE;";
+			$req="select MOT_CODE, MOT_LIB from MOTIF_VISITE;";
+			//echo $req;
 			$resultat=mysql_query($req);
 			while($ligne=mysql_fetch_array($resultat))
 			{//début while
